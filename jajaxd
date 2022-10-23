@@ -1,0 +1,490 @@
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+
+local Window = OrionLib:MakeWindow({Name = "Verny Hub", HidePremium = false, SaveConfig = true, ConfigFolder = "useless ahh folder"})
+
+local Tab = Window:MakeTab({
+	Name = "Main",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+--locals
+
+local shop = game:GetService("Workspace").shopAreaCircles.shopAreaCircle19.circleInner:GetDescendants()
+
+local PH = game.Players.LocalPlayer.Character.Head
+
+local sell = game:GetService("Workspace").sellAreaCircles.sellAreaCircle16.circleInner:GetDescendants()
+
+local ranks = game:GetService("ReplicatedStorage").Ranks.Ground:GetChildren()
+
+local spawnedcoins = game:GetService("Workspace").spawnedCoins.Valley:GetDescendants()
+
+local hrp = game.Players.LocalPlayer.Character.HumanoidRootPart
+
+local crystal = game:GetService("Workspace").mapCrystalsFolder:GetChildren()
+
+local islands = game:GetService("Workspace").areaTeleportParts:GetChildren()
+
+local playerHead = game.Players.LocalPlayer.Character.Head
+
+
+
+--da thing
+Tab:AddToggle({
+	Name = "Auto Swing",
+	Default = false,
+	Callback = function(AUSValue)
+		_G.autoswing = AUSValue
+
+        task.spawn(function()
+            while _G.autoswing do
+local args = {
+    [1] = "swingKatana"
+}
+game:GetService("Players").LocalPlayer.ninjaEvent:FireServer(unpack(args))
+wait(0.01)
+            end
+        end)
+	end    
+})
+
+
+Tab:AddToggle({
+	Name = "Auto Sell",
+	Default = false,
+	Callback = function(ASValue)
+		_G.autosell = ASValue
+
+        task.spawn(function ()
+            while _G.autosell do
+                
+for i,v in pairs(sell) do
+    if v.Name == "TouchInterest" and v.Parent then
+        firetouchinterest(PH, v.Parent, 0)
+        wait(0.01)
+        firetouchinterest(PH, v.Parent, 1)
+    end
+end
+            end
+        end)
+	end    
+})
+
+
+
+local Tab = Window:MakeTab({
+	Name = "Auto Crystal",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+local crystalTable = {}
+
+for i,v in pairs(crystal) do
+    if v:IsA("Model") then
+        table.insert(crystalTable, v.Name)
+    end
+end
+
+Tab:AddDropdown({
+	Name = "Select Crystal",
+	Default = " ",
+	Options = crystalTable,
+	Callback = function(CRValue)
+		_G.autocrystal = CRValue
+	end    
+})
+
+Tab:AddToggle({
+	Name = "Auto Open Crystal",
+	Default = false,
+	Callback = function(ACSValue)
+		_G.acs = ACSValue
+	end    
+})
+
+task.spawn(function()
+    while task.wait() do
+        if _G.acs then
+            if _G.autocrystal ~= nil then
+local args = {
+    [1] = "openCrystal",
+    [2] = _G.autocrystal 
+}
+game:GetService("ReplicatedStorage").rEvents.openCrystalRemote:InvokeServer(unpack(args))
+wait(0.5)
+            end
+        end
+    end
+end)
+
+
+Tab:AddToggle({
+	Name = "Auto Evolve Pets",
+	Default = false,
+	Callback = function(AEValue)
+		_G.autoevo = AEValue
+
+        task.spawn(function()
+            while _G.autoevo do
+        local args = {
+            [1] = "autoEvolvePets"
+        }
+        game:GetService("ReplicatedStorage").rEvents.autoEvolveRemote:InvokeServer(unpack(args))
+        wait(8)
+            end
+        end)
+	end    
+})
+
+
+local Tab = Window:MakeTab({
+	Name = "Buy/Shop",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+Tab:AddButton({
+	Name = "Open Shop",
+	Callback = function()
+        for i,v in pairs(shop) do
+            if v.Name == "TouchInterest" and v.Parent then
+                firetouchinterest(PH, v.Parent, 0)
+                wait(0.01)
+                firetouchinterest(PH, v.Parent, 0)
+            end
+        end
+  	end    
+})
+
+
+Tab:AddToggle({
+	Name = "Auto Buy All Katanas",
+	Default = false,
+	Callback = function(ABAKValue)
+		_G.abak = ABAKValue
+
+        task.spawn(function()
+            while _G.abak do 
+local args = {
+    [1] = "buyAllSwords",
+    [2] = "Blazing Vortex Island"
+}
+game:GetService("Players").LocalPlayer.ninjaEvent:FireServer(unpack(args))
+wait(3)
+            end
+        end)
+	end    
+})
+
+Tab:AddToggle({
+	Name = "Auto Buy All Belts",
+	Default = false,
+	Callback = function(ABABValue)
+		_G.abab = ABABValue
+
+        task.spawn(function()
+            while _G.abab do
+                local args = {
+                    [1] = "buyAllBelts",
+                    [2] = "Blazing Vortex Island"
+                }
+                game:GetService("Players").LocalPlayer.ninjaEvent:FireServer(unpack(args))
+                wait(3)
+            end
+        end)
+	end    
+})
+
+
+Tab:AddToggle({
+	Name = "Auto Buy Shurikens",
+	Default = false,
+	Callback = function(ABSKValue)
+		_G.autoshuriken = ABSKValue
+
+        task.spawn(function()
+    while _G.autoshuriken do
+local args = {
+    [1] = "buyAllShurikens",
+    [2] = "Blazing Vortex Island"
+}
+game:GetService("Players").LocalPlayer.ninjaEvent:FireServer(unpack(args))
+wait(5)
+    end
+end)
+
+	end    
+})
+
+Tab:AddToggle({
+	Name = "Auto Buy All Skills",
+	Default = false,
+	Callback = function(ABSValue)
+		_G.autobuyskill = ABSValue
+
+        task.spawn(function()
+    while _G.autobuyskill do
+local args = {
+    [1] = "buyAllSkills",
+    [2] = "Blazing Vortex Island"
+}
+game:GetService("Players").LocalPlayer.ninjaEvent:FireServer(unpack(args))
+wait(5)
+    end
+end)
+	end    
+})
+
+
+local Tab = Window:MakeTab({
+	Name = "Boss/Duel",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+Tab:AddToggle({
+	Name = "Auto Join Duel",
+	Default = false,
+	Callback = function(ADValue)
+		_G.autoduel = ADValue
+
+        task.spawn(function()
+    while _G.autoduel do
+local args = {
+    [1] = "joinDuel"
+}
+game:GetService("ReplicatedStorage").rEvents.duelEvent:FireServer(unpack(args))
+wait(8)
+    end
+end)
+	end    
+})
+
+Tab:AddLabel("Enable Auto Swing For Faster Kill")
+
+Tab:AddToggle({
+	Name = "Auto Ancient Magma Boss",
+	Default = false,
+	Callback = function(AMBValue)
+		_G.amb = AMBValue
+
+        task.spawn(function()
+            while _G.amb do
+                hrp.CFrame = game:GetService("Workspace").bossFolder.AncientMagmaBoss.HumanoidRootPart.CFrame * CFrame.new(0,0,1)
+                wait(0.08)
+            end
+        end)
+	end    
+})
+
+
+Tab:AddToggle({
+	Name = "Auto Eternal Boss",
+	Default = false,
+	Callback = function(EBValue)
+		_G.eb = EBValue
+
+        task.spawn(function()
+            while _G.eb do
+                hrp.CFrame = game:GetService("Workspace").bossFolder.EternalBoss.HumanoidRootPart.CFrame * CFrame.new(0,0,1)
+                wait(0.08)
+            end
+        end)
+	end    
+})
+
+
+
+Tab:AddToggle({
+	Name = "Auto Robot Boss",
+	Default = false,
+	Callback = function(RBValue)
+		_G.rb = RBValue
+
+        task.spawn(function()
+            while _G.rb do
+                hrp.CFrame = game:GetService("Workspace").bossFolder.RobotBoss.HumanoidRootPart.CFrame * CFrame.new(0,0,1)
+                wait(0.08)
+            end
+        end)
+	end    
+})
+
+
+local Tab = Window:MakeTab({
+	Name = "Usefull Misc",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+Tab:AddButton({
+	Name = "Unlock All Islands",
+	Callback = function()
+      		for i,v in ipairs(game:GetService("Workspace").islandUnlockParts:GetDescendants()) do
+    if v.Name == "TouchInterest" and v.Parent then
+        firetouchinterest(playerHead, v.Parent, 0)
+        wait(0.05)
+        firetouchinterest(playerHead, v.Parent, 1)
+    end
+end
+  	end    
+})
+
+Tab:AddToggle({
+	Name = "Auto Spin Wheel",
+	Default = false,
+	Callback = function(ASWValue)
+		_G.autospin = ASWValue
+
+        task.spawn(function()
+    while _G.autospin do
+local args = {
+    [1] = "openFortuneWheel",
+    [2] = workspace:FindFirstChild("Fortune Wheel")
+}
+game:GetService("ReplicatedStorage").rEvents.openFortuneWheelRemote:InvokeServer(unpack(args))
+wait(60)
+    end
+end)
+	end    
+})
+
+
+
+Tab:AddButton({
+	Name = "Collect All Chests",
+	Callback = function()
+      		hrp.CFrame = game:GetService("Workspace").ultraNinjitsuChest.chestParticlePart.CFrame
+wait(0.5)
+hrp.CFrame = game:GetService("Workspace").mythicalChest.chestParticlePart.CFrame
+wait(0.5)
+hrp.CFrame = game:GetService("Workspace").goldenChest.chestParticlePart.CFrame
+wait(0.5)
+hrp.CFrame = game:GetService("Workspace").enchantedChest.chestParticlePart.CFrame
+wait(0.5)
+hrp.CFrame = game:GetService("Workspace").groupRewardsCircle.circleFakeInner.CFrame
+wait(0.5) 
+hrp.CFrame = game:GetService("Workspace").magmaChest.chestParticlePart.CFrame
+wait(0.5)
+hrp.CFrame = game:GetService("Workspace").legendsChest.chestParticlePart.CFrame
+wait(0.5)
+hrp.CFrame = game:GetService("Workspace").eternalChest.chestParticlePart.CFrame
+wait(0.5)
+hrp.CFrame = game:GetService("Workspace").ancientChest.chestParticlePart.CFrame
+wait(0.5)
+hrp.CFrame = game:GetService("Workspace").midnightShadowChest.chestParticlePart.CFrame
+wait(0.5)
+hrp.CFrame = game:GetService("Workspace").lightKarmaChest.chestParticlePart.CFrame
+wait(0.5)
+hrp.CFrame = game:GetService("Workspace").evilKarmaChest.chestParticlePart.CFrame
+wait(0.5)
+hrp.CFrame = game:GetService("Workspace").wonderChest.chestParticlePart.CFrame
+wait(0.5)
+hrp.CFrame = game:GetService("Workspace").goldenZenChest.chestParticlePart.CFrame
+wait(0.5)
+hrp.CFrame = game:GetService("Workspace").skystormMastersChest.chestParticlePart.CFrame
+wait(0.5)
+hrp.CFrame = game:GetService("Workspace").chaosLegendsChest.chestParticlePart.CFrame
+wait(0.5)
+hrp.CFrame = game:GetService("Workspace").soulFusionChest.chestParticlePart.CFrame
+wait(0.5)
+hrp.CFrame = game:GetService("Workspace").saharaChest.chestParticlePart.CFrame
+wait(0.5)
+hrp.CFrame = game:GetService("Workspace").thunderChest.chestParticlePart.CFrame
+wait(0.5)
+  	end    
+})
+
+
+local Tab = Window:MakeTab({
+	Name = "Misc",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+Tab:AddSlider({
+	Name = "Change Walkspeed",
+	Min = 100,
+	Max = 1000,
+	Default = 5,
+	Color = Color3.fromRGB(255,255,255),
+	Increment = 10,
+	ValueName = "Speed",
+	Callback = function(WSValue)
+		game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = WSValue
+	end    
+})
+
+
+
+Tab:AddSlider({
+	Name = "Change Jumppower",
+	Min = 100,
+	Max = 10000,
+	Default = 5,
+	Color = Color3.fromRGB(255,255,255),
+	Increment = 10,
+	ValueName = "Jumppower",
+	Callback = function(JSValue)
+		game.Players.LocalPlayer.Character.Humanoid.JumpPower = JSValue
+	end    
+})
+
+
+Tab:AddButton({
+	Name = "Active Anti Afk Script",
+	Callback = function()
+        loadstring(game:HttpGet(('https://raw.githubusercontent.com/RTrade/Voidz/main/Protected%20(12).lua'),true))()
+  	end    
+})
+
+
+Tab:AddButton({
+	Name = "Remove Name",
+	Callback = function()
+        game:GetService("Workspace")[game.Players.LocalPlayer.Name].Head.nameGui:Destroy()
+
+  	end    
+})
+
+local Tab = Window:MakeTab({
+	Name = "Destroy Script",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+Tab:AddLabel("Please turn of all toggles before destroying the script")
+
+Tab:AddButton({
+	Name = "Destroy Script",
+	Callback = function()
+      	OrionLib:Destroy()	
+  	end    
+})
+
+
+local Tab = Window:MakeTab({
+	Name = "Credits",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+Tab:AddLabel("Credits: !KatagiriYuuchi#7765")
+
+Tab:AddLabel("Join My discord server: https://discord.gg/dwuSS95ecF")
+
+Tab:AddButton({
+	Name = "Copy Discord Link",
+	Callback = function()
+      		setclipboard("https://discord.gg/dwuSS95ecF")
+            wait(0.01)
+            OrionLib:MakeNotification({
+                Name = "Discord Link Copied!",
+                Content = "Discord Link Has been copied to clipboard",
+                Image = "rbxassetid://4483345998",
+                Time = 5
+            })
+  	end    
+})

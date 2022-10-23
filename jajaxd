@@ -473,12 +473,12 @@ local Tab = Window:MakeTab({
 
 Tab:AddLabel("Credits: !KatagiriYuuchi#7765")
 
-Tab:AddLabel("Join My discord server: https://discord.gg/dwuSS95ecF")
+Tab:AddLabel("Join My discord server: https://discord.gg/5VKSJN8k")
 
 Tab:AddButton({
 	Name = "Copy Discord Link",
 	Callback = function()
-      		setclipboard("https://discord.gg/dwuSS95ecF")
+      		setclipboard("https://discord.gg/5VKSJN8k")
             wait(0.01)
             OrionLib:MakeNotification({
                 Name = "Discord Link Copied!",
